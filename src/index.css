@@ -69,6 +69,7 @@ button:focus-visible {
 }
 @media screen and (max-width: 576px) {
     :root {
-        font-size: 14px;
+        font-size: 14+
+        px;
     }
 }

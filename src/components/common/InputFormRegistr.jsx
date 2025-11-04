@@ -3,7 +3,6 @@ const InputFormRegistr = (props) => {
         <div className="input-field">
             <label className="block text-left text-2xl/6 font-medium mb-4 text-gray-100" htmlFor={props.htmlFor}>
                 {props.label}
-                {props.required && <span className="required">*</span>}
             </label>
             {props.children}
             <input

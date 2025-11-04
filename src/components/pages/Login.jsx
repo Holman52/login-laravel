@@ -7,31 +7,52 @@ const Login = () => {
         password: "",
     })
     const [errorSate, setErrorState] = useState({
-        bool: false,
-        errorMessage: "",
+        email: {
+            bool: false,
+            errorMessage: "",
+        },
+        password: {
+            bool: false,
+            errorMessage: "",
+        }
     })
     const handleChange = (type, value) => {
         setFormaData({ ...formaData, [type]: value });
     }
     const existDate = {
-        email: "123@123",
-        password: "12345678",
+        email: ["123@123", '1@1'],
+        password: ["12345678",'11']
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrorState({
+            email: { bool: false, errorMessage: "" },
+            password: { bool: false, errorMessage: "" }
+        });
+
         if(formaData.email === existDate.email && formaData.password === existDate.password) {
-            alert("вы вошли в профиль")
             setErrorState({
                 bool:false,
                 errorMessage: "",
             })
         }
-        else if(formaData.email === existDate.email && formaData.password !== existDate.password){
-            alert("Пароль не верный")
-            setErrorState({
+        if (!existDate.email.includes(formaData.email)) {
+            setErrorState(prev => ({
+                ...prev,
+                email: {
                     bool: true,
-                    errorMessage: "Пользователя с таким логином и паролем нет"
-                })
+                    errorMessage: "Пользователя с таким логином нет"
+                }
+            }))
+        }
+        else if(!existDate.password.includes(formaData.password)){
+            setErrorState(prev => ({
+                ...prev,
+                password: {
+                    bool: true,
+                    errorMessage: "Неверный пароль"
+                }
+            }));
             console.log(errorSate.errorMessage)
         }
     }
@@ -55,7 +76,8 @@ const Login = () => {
                                 name="email"
                                 label='Email address'
                                 htmlFor="email"
-                                error={errorSate.bool}
+                                error={errorSate.email.bool}
+                                errorMessage={errorSate.email.errorMessage}
                                 onChange={(e) => handleChange('email', e.target.value)}
                                 autoComplete="email"/>
                         </div>
@@ -69,8 +91,8 @@ const Login = () => {
                                 name="password"
                                 label='Password'
                                 htmlFor="password"
-                                error={errorSate.bool}
-                                errorMessage={errorSate.errorMessage}
+                                error={errorSate.password.bool}
+                                errorMessage={errorSate.password.errorMessage}
                                 onChange={(e) => handleChange('password', e.target.value)}
                                 autoComplete="password"/>
                         </div>
@@ -89,7 +111,7 @@ const Login = () => {
                 </form>
 
                 <div className="flex justify-between text-center mt-4 text-sm/6 text-gray-400">
-                    <a href="#" className="font-semibold text-2xl text-indigo-400 hover:text-indigo-300">I don't have account</a>
+                    <a href="/registr" className="font-semibold text-2xl text-indigo-400 hover:text-indigo-300">I don't have account</a>
 
                 </div>
             </div>
